@@ -10,7 +10,6 @@ server.set('view engine', 'ejs')
 server.use(express.static('public'))
 
 // habilitar req.body
-
 server.use(express.urlencoded({
     extended: true
 }))
