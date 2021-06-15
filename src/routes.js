@@ -8,20 +8,80 @@ const profile = {
     "monthly-budget": 3000,
     "days-per-week": 5,
     "hours-per-day": 5,
-    "vacation-per-year": 4
+    "vacation-per-year": 4,
+    "value-hour": 75
 }
 
-const jobs = []
+const jobs = [
+    {
+        id: 1,
+        name: "Pizzaria do Guloso",
+        'daily-hours': 2,
+        'total-hours': 60,
+        created_at: Date.now()
+    },
+    {
+        id: 2,
+        name: "OneTwo Project",
+        'daily-hours': 2,
+        'total-hours': 60,
+        created_at: Date.now()
+    }
+]
 
-routes.get('/', (req, res) => res.render(basePath + 'index'))
+function remainingDays(job) {
+    const remainingDaysIni = (job['total-hours'] / job['daily-hours']).toFixed()
+
+    const createdDate = new Date(job.created_at)
+    const dueday = createdDate.getDate() + Number(remainingDaysIni)
+    const dueDateInMs = createdDate.setDate(dueday)
+
+    const timeDiffInMs = dueDateInMs - Date.now()
+    // transformar milli em dias
+    const dayInMs = 1000 * 60 * 60 * 24
+    const dayDiff = Math.floor(timeDiffInMs / dayInMs)
+
+    // restam x dias
+    return dayDiff
+}
+
+routes.get('/', (req, res) => {
+    const updateJobs = jobs.map(job => {
+        const remaining = remainingDays(job)
+        const status = remaining <= 0 ? "done": "progress"
+        
+        return {
+            ...job,
+            remaining,
+            status,
+            budget: profile["value-hour"] * job["total-hours"]
+        }
+    })
+
+    return res.render(basePath + 'index', { jobs: updateJobs })
+})
+
 routes.get('/job', (req, res) => res.render(basePath + 'job'))
-routes.post('/job', (req, res) => {
 
+routes.post('/job', (req, res) => {
     // req.body = { name: name , 'daily-hours': '3.1', 'total-hours': '3' }
-    jobs.push(req.body)
+    // pega o indice elemento do array Jobs
+     const lastElementJobs = jobs.length() - 1
+
+    // pega o id do ultimo elemento caso se nao exista atribui 1 no id
+    const lastId = jobs[lastElementJobs].id || 1;
+
+    jobs.push({
+        id: lastId + 1,
+        name: req.body.name,
+        'daily-hours': req.body['daily-hours'],
+        'total-hours': req.body['total-hours'],
+        created_at: Date.now() // atribuindo data de hoje
+    }) 
+
     return res.redirect('/')
 })
 routes.get('/job/edit', (req, res) => res.render(basePath + 'job-edit'))
 routes.get('/profile', (req, res) => res.render(basePath + 'profile', { profile }))
 
-module.exports = routes
+module.exports = routes;
