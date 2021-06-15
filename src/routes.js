@@ -13,6 +13,9 @@ const profile = {
 
 routes.get('/', (req, res) => res.render(basePath + 'index'))
 routes.get('/job', (req, res) => res.render(basePath + 'job'))
+routes.post('/job', (req, res) => {
+    console.log(req.body);
+})
 routes.get('/job/edit', (req, res) => res.render(basePath + 'job-edit'))
 routes.get('/profile', (req, res) => res.render(basePath + 'profile', { profile }))
 
