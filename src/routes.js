@@ -76,7 +76,7 @@ const Job = {
                     ...job,
                     remaining,
                     status,
-                    budget: Profile.data["value-hour"] * job["total-hours"]
+                    budget: Job.services.calculateBudget(job, Profile.data["value-hour"])
                 }
             })
 
@@ -110,7 +110,13 @@ const Job = {
             
             const jobId = req.params.id
 
-            const job = Job.data.find(job => job.id === jobId)
+            const job = Job.data.find(job => Number(job.id) === Number(jobId))
+
+            if (!job) {
+                return res.send('Job not found!')
+            }
+
+            job.budget = Job.services.calculateBudget(job, Profile.data["value-hour"])
 
             return res.render(basePath + 'job-edit', { job })
         }
@@ -131,7 +137,9 @@ const Job = {
 
             // restam x dias
             return dayDiff
-        }
+        },
+
+        calculateBudget: (job, valueHour) => valueHour * job["total-hours"]
     }
 
 }
