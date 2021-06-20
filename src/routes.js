@@ -95,7 +95,7 @@ const Job = {
 			const lastElementJobs = Job.data.length - 1
 
 			// pega o id do ultimo elemento caso se nao exista atribui 1 no id
-			const lastId = Job.data[lastElementJobs].id || 1;
+			const lastId = Job.data[lastElementJobs].id || 0;
 
 			Job.data.push({
 				id: lastId + 1,
@@ -149,6 +149,14 @@ const Job = {
 
 			res.redirect('/job/' + jobId)
 
+		},
+
+		delete(req, res) {
+			const jobId = req.params.id
+
+			Job.data = Job.data.filter(job => Number(jobId) !== Number(job.id))
+
+			return res.redirect('/')
 		}
 	},
 
@@ -179,6 +187,7 @@ routes.get('/job', Job.controllers.create)
 routes.post('/job', Job.controllers.save)
 routes.get('/job/:id', Job.controllers.show)
 routes.post('/job/:id', Job.controllers.update)
+routes.post('/job/delete/:id', Job.controllers.delete)
 routes.get('/profile', Profile.controllers.index)
 routes.post('/profile', Profile.controllers.update)
 
