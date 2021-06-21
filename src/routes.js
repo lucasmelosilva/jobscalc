@@ -139,13 +139,7 @@ const Job = {
 				"daily-hours": req.body["daily-hours"]
 			}
 
-			Job.data = Job.data.map(job => {
-				if(Number(jobId) === Number(job.id)) {
-					job = updatedJob
-				}
-				
-				return job
-			})
+			Job.data = Job.data.map( job => Number(jobId) === Number(job.id)? job = updatedJob: job )
 
 			res.redirect('/job/' + jobId)
 
