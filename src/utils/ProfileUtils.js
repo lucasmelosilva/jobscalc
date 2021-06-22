@@ -18,5 +18,7 @@ module.exports = {
     // qual sera o valor da minha hora?
     const valueHour = data["monthly-budget"] / monthlyTotalHours
 
+    return valueHour
+
   }
 }
