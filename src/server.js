@@ -1,7 +1,10 @@
 const express = require('express')
 const routes = require('./routes')
 const server = express()
+const path = require('path')
 
+// mudar a localização da pasta views
+server.set('views', path.join(__dirname, 'views'))
 
 // user template ejs
 server.set('view engine', 'ejs')
@@ -10,9 +13,7 @@ server.set('view engine', 'ejs')
 server.use(express.static('public'))
 
 // habilitar req.body
-server.use(express.urlencoded({
-    extended: true
-}))
+server.use(express.urlencoded({ extended: true }))
 
 // routes
 server.use(routes)
