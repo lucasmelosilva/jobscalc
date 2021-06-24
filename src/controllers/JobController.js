@@ -16,7 +16,7 @@ module.exports = {
     // pega o id do ultimo elemento caso se nao exista atribui 1 no id
     const lastId = jobs[lastElementJobs]?.id || 0;
 
-    jobs.push({
+    Job.create({
       id: lastId + 1,
       name: req.body.name,
       'daily-hours': req.body['daily-hours'],

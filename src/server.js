@@ -20,5 +20,5 @@ server.use(routes)
 
 // levanta servidor na porta 3000
 server.listen(3000, () => {
-    console.log('Hello, Could you please turn on the server! ;)')
+    console.log("I'm already up ;)")
 })
