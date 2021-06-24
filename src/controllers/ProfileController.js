@@ -2,8 +2,9 @@ const Profile = require('../models/Profile');
 const ProfileUtils = require('../utils/ProfileUtils');
 
 module.exports = {
-  index(req, res) {    
-    return res.render('profile', { profile: Profile.get() })
+  async index(req, res) {    
+    const profile = await Profile.get()
+    return res.render('profile', { profile: profile })
   },
 
   update(req, res) {
