@@ -7,13 +7,14 @@ module.exports = {
     return res.render('profile', { profile: profile })
   },
 
-  update(req, res) {
+  async update(req, res) {
 
+    const profile = await Profile.get()
     // chama a funçao que calcula o valor da hora
     const valueHour = ProfileUtils.calculateValueHours(req.body);
 
-    Profile.update({
-      ...Profile.get(),
+    await Profile.update({
+      ...profile,
       ...req.body,
       "value-hour": valueHour
     });
