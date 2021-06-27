@@ -5,7 +5,7 @@ const Profile = require('../models/Profile')
 module.exports = {
   async index(req, res) {
     const profile = await Profile.get();
-    const jobs = Job.get()
+    const jobs = await Job.get()
 
     const statusCount = {
       progress: 0,

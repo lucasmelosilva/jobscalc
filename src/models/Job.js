@@ -1,25 +1,20 @@
-let data = [
-  {
-    id: 1,
-    name: "Pizzaria do Guloso",
-    'daily-hours': 2,
-    'total-hours': 1,
-    created_at: Date.now(),
-    budget: 76
-  },
-  {
-    id: 2,
-    name: "OneTwo Project",
-    'daily-hours': 2,
-    'total-hours': 60,
-    created_at: Date.now(),
-    budget: 76
-  }
-]
+const Database = require('../db/config')
 
 module.exports = {
-  get() {
-    return data;
+  async get() {
+    const db = await Database();
+
+    const data = await db.all(`SELECT * FROM jobs;`);
+
+    await db.close();
+
+    return data.map(job => ({
+      name: job.name,
+      'daily-hours': job.daity_hours,
+      'total-hours': job.total_hours,
+      'created-at': job.created_at,
+      budget: job.budget
+    }))
   },
 
   update(newJob) {
