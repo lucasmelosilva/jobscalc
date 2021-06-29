@@ -32,13 +32,11 @@ module.exports = {
     const db = await Database();
 
     await db.run(`INSERT INTO jobs (
-      id,
       name,
       daily_hours,
       total_hours,
       created_at
     ) VALUES (
-      ${Number(newJob.id)},
       "${newJob.name}",
       ${Number(newJob['daily-hours'])},
       ${Number(newJob['total-hours'])},

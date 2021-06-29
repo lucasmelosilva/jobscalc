@@ -7,17 +7,8 @@ module.exports = {
     return res.render('job')
   },
 
-  async save(req, res) {
-    const jobs = await Job.get()
-    // req.body = { name: name , 'daily-hours': '3.1', 'total-hours': '3' }
-    // pega o indice elemento do array Jobs
-    const lastElementJobs = jobs.length - 1
-    
-    // pega o id do ultimo elemento caso se nao exista atribui 1 no id
-    const lastId = jobs[lastElementJobs]?.id || 0;
-
-    Job.create({
-      id: lastId + 1,
+  async save(req, res) { 
+    await Job.create({
       name: req.body.name,
       'daily-hours': req.body['daily-hours'],
       'total-hours': req.body['total-hours'],
