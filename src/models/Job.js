@@ -10,7 +10,7 @@ module.exports = {
 
     return data.map(job => ({
       name: job.name,
-      'daily-hours': job.daity_hours,
+      'daily-hours': job.daily_hours,
       'total-hours': job.total_hours,
       'created-at': job.created_at,
       budget: job.budget

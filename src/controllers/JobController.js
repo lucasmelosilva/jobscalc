@@ -7,8 +7,8 @@ module.exports = {
     return res.render('job')
   },
 
-  save(req, res) {
-    const jobs = Job.get()
+  async save(req, res) {
+    const jobs = await Job.get()
     // req.body = { name: name , 'daily-hours': '3.1', 'total-hours': '3' }
     // pega o indice elemento do array Jobs
     const lastElementJobs = jobs.length - 1
@@ -27,9 +27,9 @@ module.exports = {
     return res.redirect('/')
   },
 
-  show(req, res) {
+  async show(req, res) {
 
-    const jobs = Job.get()
+    const jobs = await Job.get()
     
     const jobId = req.params.id
 
@@ -39,16 +39,16 @@ module.exports = {
       return res.send('Job not found!')
     }
 
-    const profile = Profile.get()
+    const profile = await Profile.get()
 
     job.budget = JobUtils.calculateBudget(job, profile["value-hour"])
 
     return res.render('job-edit', { job })
   },
 
-  update(req, res) {  
+  async update(req, res) {  
     const jobId = req.params.id
-    const jobs = Job.get()
+    const jobs = await Job.get()
 
     const job = jobs.find(job => Number(job.id) === Number(jobId))
 
