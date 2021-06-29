@@ -3,7 +3,7 @@ module.exports = {
     const remainingDaysIni = (Number(job['total-hours']) / Number(job['daily-hours'])).toFixed()
 
     const createdDate = new Date(job['created-at'])
-    console.log(job['created-at']);
+
     const dueday = createdDate.getDate() + Number(remainingDaysIni)
     const dueDateInMs = createdDate.setDate(dueday)
 

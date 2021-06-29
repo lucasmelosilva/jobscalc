@@ -12,7 +12,7 @@ module.exports = {
     // req.body = { name: name , 'daily-hours': '3.1', 'total-hours': '3' }
     // pega o indice elemento do array Jobs
     const lastElementJobs = jobs.length - 1
-
+    
     // pega o id do ultimo elemento caso se nao exista atribui 1 no id
     const lastId = jobs[lastElementJobs]?.id || 0;
 
@@ -21,7 +21,7 @@ module.exports = {
       name: req.body.name,
       'daily-hours': req.body['daily-hours'],
       'total-hours': req.body['total-hours'],
-      created_at: Date.now() // atribuindo data de hoje
+      'created-at': Date.now() // atribuindo data de hoje
     })
 
     return res.redirect('/')

@@ -1,4 +1,5 @@
-const Database = require('../db/config')
+const Database = require('../db/config');
+const JobUtils = require('../utils/JobUtils');
 
 module.exports = {
   async get() {
@@ -9,6 +10,7 @@ module.exports = {
     await db.close();
 
     return data.map(job => ({
+      id: job.id,
       name: job.name,
       'daily-hours': job.daily_hours,
       'total-hours': job.total_hours,
@@ -26,7 +28,23 @@ module.exports = {
     data = data.filter(job => Number(job.id) !== Number(jobId));
   },
   
-  create(newJob) {
-    data.push(newJob);
+  async create(newJob) {
+    const db = await Database();
+
+    await db.run(`INSERT INTO jobs (
+      id,
+      name,
+      daily_hours,
+      total_hours,
+      created_at
+    ) VALUES (
+      ${Number(newJob.id)},
+      "${newJob.name}",
+      ${Number(newJob['daily-hours'])},
+      ${Number(newJob['total-hours'])},
+      ${Number(newJob['created-at'])}
+    )`)
+
+    await db.close();
   }
 }
