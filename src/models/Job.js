@@ -24,8 +24,14 @@ module.exports = {
     data = data.map( job => Number(jobId) === Number(job.id)? job = newJob: job )
   },
 
-  delete(jobId) {
-    data = data.filter(job => Number(job.id) !== Number(jobId));
+  async delete(jobId) {
+    //data = data.filter(job => Number(job.id) !== Number(jobId));
+
+    const db = await Database()
+
+    await db.run(`DELETE FROM jobs WHERE id = ${jobId};`);
+
+    await db.close();
   },
   
   async create(newJob) {
