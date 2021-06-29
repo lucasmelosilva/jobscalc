@@ -19,15 +19,14 @@ module.exports = {
     }))
   },
 
-  async update(newJob) {
-    const jobId = newJob.id
+  async update(updatedJob, jobId) {
     
     const db = await Database();
 
     await db.run(`UPDATE jobs SET 
-      name = "${newJob.name}",
-      total_hours = ${newJob['total-hours']},
-      daily_hours = ${newJob['daily-hours']} WHERE id = ${jobId};`)
+      name = "${updatedJob.name}",
+      total_hours = ${Number(updatedJob['total-hours'])},
+      daily_hours = ${Number(updatedJob['daily-hours'])} WHERE id = ${jobId};`)
 
     await db.close()
 
