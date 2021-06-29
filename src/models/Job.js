@@ -19,14 +19,21 @@ module.exports = {
     }))
   },
 
-  update(newJob) {
+  async update(newJob) {
     const jobId = newJob.id
-    data = data.map( job => Number(jobId) === Number(job.id)? job = newJob: job )
+    
+    const db = await Database();
+
+    await db.run(`UPDATE jobs SET 
+      name = "${newJob.name}",
+      total_hours = ${newJob['total-hours']},
+      daily_hours = ${newJob['daily-hours']} WHERE id = ${jobId};`)
+
+    await db.close()
+
   },
 
   async delete(jobId) {
-    //data = data.filter(job => Number(job.id) !== Number(jobId));
-
     const db = await Database()
 
     await db.run(`DELETE FROM jobs WHERE id = ${jobId};`);
